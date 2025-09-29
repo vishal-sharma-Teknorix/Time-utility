@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Card, Typography, Button, InputNumber, Space } from "antd";
-import "antd/dist/reset.css";
 
 const { Title } = Typography;
 

@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { Card, Typography, Select, List, Button, Space, Tag } from "antd";
-import "antd/dist/reset.css";
 
 const { Title, Text } = Typography;
 const { Option } = Select;
@@ -119,7 +118,6 @@ const allRegions = [
                   {/* Right side: Remove Button */}
                   <Button
                     type="link"
-                    danger
                     style={{ marginLeft: 10 }}
                     onClick={() => handleRemove(region)}
                   >

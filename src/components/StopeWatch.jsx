@@ -1,6 +1,5 @@
 import React, { useState, useRef } from "react";
 import { Card, Typography, Button, List, Pagination, Space } from "antd";
-import "antd/dist/reset.css";
 
 const { Title, Text } = Typography;
 
@@ -63,7 +62,7 @@ export default function StopeWatch() {
   };
 
   return (
-    <div style={{ display: "flex", justifyContent: "center", marginTop: "30px" }}>
+    <div style={{ display: "flex", justifyContent: "center", marginTop: '30px' }}>
       <Card
         style={{
           width: 400,
