@@ -133,7 +133,7 @@ const WorldClock = () => {
                     style={{ marginLeft: 10 }}
                     onClick={() => handleRemove(region)}
                   >
-                    ✖
+                    ❌
                   </Button>
                 </div>
               </List.Item>

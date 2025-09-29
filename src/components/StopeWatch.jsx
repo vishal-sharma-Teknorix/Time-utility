@@ -116,8 +116,8 @@ export default function StopeWatch() {
                         danger
                         onClick={() => deleteLap(startIndex + index)}
                       >
-                        ✖
-                      </Button>,
+                        ❌
+                      </Button>
                     ]}
                   >
                     <Text>

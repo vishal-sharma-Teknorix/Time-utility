@@ -1,11 +1,6 @@
 import React, { useState } from "react";
 import { Card, Tabs } from "antd";
-import {
-  ClockCircleOutlined,
-  HourglassOutlined,
-  GlobalOutlined,
-} from "@ant-design/icons";
-
+import {ClockCircleOutlined,HourglassOutlined,GlobalOutlined} from "@ant-design/icons";
 import StopeWatch from "./StopeWatch";
 import Timer from "./Timer";
 import WorldClock from "./WorldClock";
