@@ -30,7 +30,7 @@ export default function Timer() {
     setIsRunning(true);
   };
 
-  const pauseTimer = () => setIsRunning(false);
+  // const pauseTimer = () => setIsRunning(false);
 
   const resetTimer = () => {
     setIsRunning(false);
@@ -50,7 +50,7 @@ export default function Timer() {
     if (remainingTime === 0 && isRunning) {
       clearInterval(intervalRef.current);
       setIsRunning(false);
-      alert("⏰ Timer Completed!");
+      alert("TimesUp");
     }
 
     return () => clearInterval(intervalRef.current);
@@ -73,7 +73,6 @@ export default function Timer() {
           ⏱ Timer
         </Title>
 
-        {/* INPUT FIELDS */}
         <Space
           style={{ display: "flex", justifyContent: "center", marginBottom: 20 }}
         >
@@ -100,7 +99,6 @@ export default function Timer() {
           />
         </Space>
 
-        {/* TIME DISPLAY */}
         <Title
           level={1}
           style={{
@@ -115,14 +113,13 @@ export default function Timer() {
           {displaySeconds.toString().padStart(2, "0")}
         </Title>
 
-        {/* CONTROL BUTTONS */}
         <Space style={{ display: "flex", justifyContent: "center" }}>
           <Button type="primary" onClick={startTimer}>
             {remainingTime > 0 && !isRunning ? "Resume" : "Start"}
           </Button>
-          <Button onClick={pauseTimer} disabled={!isRunning}>
+          {/* <Button onClick={pauseTimer} disabled={!isRunning}>
             Pause
-          </Button>
+          </Button> */}
           <Button danger onClick={resetTimer}>
             Reset
           </Button>

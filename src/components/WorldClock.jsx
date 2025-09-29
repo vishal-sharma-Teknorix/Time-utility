@@ -1,23 +1,24 @@
-import React, { useState, useEffect } from "react";
-import { Card, Typography, Select, List, Button, Space, Tag } from "antd";
+import { useState, useEffect } from "react";
+import { Card, Typography, Select, List, Button, Space, Tag} from "antd";
 
 const { Title, Text } = Typography;
 const { Option } = Select;
 
 const WorldClock = () => {
-const allRegions = [
-  "Asia/Tokyo",          
-  "America/New_York",    
-  "Asia/Dubai",          
-  "Europe/London",       
-  "Asia/Kolkata",        
-  "America/Los_Angeles", 
-  "Europe/Berlin",       
-];
+  const allRegions = [
+    "Asia/Tokyo",
+    "America/New_York",
+    "Asia/Dubai",
+    "Europe/London",
+    "Asia/Kolkata",
+    "America/Los_Angeles",
+    "Europe/Berlin",
+  ];
 
   const [currentTime, setCurrentTime] = useState(new Date());
   const [availableRegions, setAvailableRegions] = useState(allRegions);
   const [selectedRegions, setSelectedRegions] = useState([]);
+  const [regionValue, setRegionValue] = useState(null);
 
   useEffect(() => {
     const intervalId = setInterval(() => {
@@ -27,8 +28,21 @@ const allRegions = [
   }, []);
 
   const handleSelect = (value) => {
-    setSelectedRegions((prev) => [...prev, value]);
-    setAvailableRegions((prev) => prev.filter((region) => region !== value));
+    setRegionValue(value);
+  };
+
+  const handleSubmit = () => {
+    if (!regionValue) {
+      alert("Please select a region first!");
+      return;
+    }
+    if (selectedRegions.includes(regionValue)) {
+      alert("This country clock already added, please choose a different option.");
+      return;
+    }
+    setSelectedRegions((prev) => [...prev, regionValue]);
+    // setAvailableRegions((prev) => prev.filter((region) => region !== regionValue));
+    setRegionValue(null);
   };
 
   const handleRemove = (region) => {
@@ -37,8 +51,9 @@ const allRegions = [
   };
 
   const handleReset = () => {
-    setSelectedRegions([]); // clear selected
-    setAvailableRegions(allRegions); // restore all regions
+    setSelectedRegions([]);
+    setAvailableRegions(allRegions);
+    setRegionValue(null);
   };
 
   const getTimeInZone = (region) => {
@@ -58,7 +73,6 @@ const allRegions = [
           🌍 World Clock
         </Title>
 
-        {/* Dropdown & Reset Button */}
         <Space
           style={{
             display: "flex",
@@ -70,8 +84,8 @@ const allRegions = [
           <Select
             placeholder="Select a region"
             style={{ width: 250 }}
+            value={regionValue}
             onChange={handleSelect}
-            value={null}
           >
             {availableRegions.map((region) => (
               <Option key={region} value={region}>
@@ -80,7 +94,10 @@ const allRegions = [
             ))}
           </Select>
 
-          {/* Reset Button */}
+          <Button type="primary" onClick={handleSubmit}>
+            Add Time
+          </Button>
+
           <Button
             danger
             onClick={handleReset}
@@ -89,9 +106,6 @@ const allRegions = [
             Reset
           </Button>
         </Space>
-
-        {/* List of Selected Regions */}
-        {selectedRegions.length > 0 ? (
           <List
             bordered
             dataSource={selectedRegions}
@@ -105,7 +119,6 @@ const allRegions = [
                     width: "100%",
                   }}
                 >
-                  {/* Left side: region + time */}
                   <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
                     <Tag color="blue" style={{ fontWeight: 500 }}>
                       {region}
@@ -115,7 +128,6 @@ const allRegions = [
                     </Text>
                   </div>
 
-                  {/* Right side: Remove Button */}
                   <Button
                     type="link"
                     style={{ marginLeft: 10 }}
@@ -127,14 +139,6 @@ const allRegions = [
               </List.Item>
             )}
           />
-        ) : (
-          <Text
-            type="secondary"
-            style={{ display: "block", textAlign: "center" }}
-          >
-            No regions selected yet. Choose one above to start tracking time.
-          </Text>
-        )}
       </Card>
     </div>
   );

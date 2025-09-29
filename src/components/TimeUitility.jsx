@@ -13,12 +13,16 @@ import WorldClock from "./WorldClock";
 const { TabPane } = Tabs;
 
 const TimeUitility = () => {
-  const [activeTab, setActiveTab] = useState("stopwatch"); // pre-select Stopwatch by default
+  const [activeTab, setActiveTab] = useState("stopwatch");
 
   return (
-    <div >
+    <div>
       <Card
-         title={<div style={{ textAlign: "center" , fontSize:'40px' }}>Time Utiliti App</div>}
+        title={
+          <div style={{ textAlign: "center", fontSize: "40px" }}>
+            Time Utiliti App
+          </div>
+        }
       >
         <Tabs
           activeKey={activeTab}
@@ -37,18 +41,6 @@ const TimeUitility = () => {
           >
             <StopeWatch />
           </TabPane>
-
-          <TabPane
-            tab={
-              <span>
-                <HourglassOutlined /> Timer
-              </span>
-            }
-            key="timer"
-          >
-            <Timer />
-          </TabPane>
-
           <TabPane
             tab={
               <span>
@@ -58,6 +50,16 @@ const TimeUitility = () => {
             key="worldclock"
           >
             <WorldClock />
+          </TabPane>
+          <TabPane
+            tab={
+              <span>
+                <HourglassOutlined /> Timer
+              </span>
+            }
+            key="timer"
+          >
+            <Timer />
           </TabPane>
         </Tabs>
       </Card>

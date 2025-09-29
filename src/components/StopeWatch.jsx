@@ -4,12 +4,10 @@ import { Card, Typography, Button, List, Pagination, Space } from "antd";
 const { Title, Text } = Typography;
 
 export default function StopeWatch() {
-  // ------------------ TIMER STATE ------------------
   const [time, setTime] = useState(0);
   const [isRunning, setIsRunning] = useState(false);
   const timerRef = useRef(null);
 
-  // ------------------ LAP'S STATE ------------------
   const [laps, setLaps] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -18,7 +16,6 @@ export default function StopeWatch() {
   const endIndex = startIndex + lapsPerPage;
   const currentLaps = laps.slice(startIndex, endIndex);
 
-  // ------------------ TIMER FUNCTIONS ------------------
   const startTimer = () => {
     if (!isRunning) {
       setIsRunning(true);
@@ -74,12 +71,10 @@ export default function StopeWatch() {
           ⏱️ Stopwatch
         </Title>
 
-        {/* TIMER DISPLAY */}
         <Title level={1} style={{ textAlign: "center", marginBottom: 20 }}>
           {formatTime(time)}
         </Title>
 
-        {/* TIMER CONTROL BUTTONS */}
         <Space
           style={{
             display: "flex",
@@ -102,7 +97,6 @@ export default function StopeWatch() {
           </Button>
         </Space>
 
-        {/* LAP LIST SECTION */}
         {laps.length > 0 && (
           <>
             <Title level={4} style={{ textAlign: "center" }}>
