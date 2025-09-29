@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Card, Typography, Button, InputNumber, Space } from "antd";
+import { Card, Typography, Button, InputNumber, Space, Alert } from "antd";
 
 const { Title } = Typography;
 
@@ -7,7 +7,7 @@ export default function Timer() {
   const [hours, setHours] = useState("");
   const [minutes, setMinutes] = useState("");
   const [seconds, setSeconds] = useState("");
-
+  const [alertMessage,setAlertMessage] = useState(null)
   const [remainingTime, setRemainingTime] = useState(0);
   const [isRunning, setIsRunning] = useState(false);
   const intervalRef = useRef(null);
@@ -20,7 +20,11 @@ export default function Timer() {
         parseInt(seconds || 0);
 
       if (totalSeconds <= 0) {
-        alert("Enter values first!");
+        setAlertMessage({
+          type:'warning',
+          message:'Enter value First'
+        })
+        // alert("Enter values first!");
         return;
       }
 
@@ -50,7 +54,11 @@ export default function Timer() {
     if (remainingTime === 0 && isRunning) {
       clearInterval(intervalRef.current);
       setIsRunning(false);
-      alert("TimesUp");
+      setAlertMessage({
+        message:'timesUp',
+        type:'success'
+      })
+      // alert("TimesUp");
     }
 
     return () => clearInterval(intervalRef.current);
@@ -72,6 +80,15 @@ export default function Timer() {
         <Title level={2} style={{ textAlign: "center" }}>
           ⏱ Timer
         </Title>
+        
+        {alertMessage&& (<Alert message={alertMessage.message}
+         type={alertMessage.type}
+         showIcon
+         closable
+         style={{marginBottom:'20px'}}
+         onClose={()=>setAlertMessage(null)}
+         />)
+         }
 
         <Space
           style={{ display: "flex", justifyContent: "center", marginBottom: 20 }}

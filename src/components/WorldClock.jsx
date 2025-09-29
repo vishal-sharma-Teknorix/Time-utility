@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Card, Typography, Select, List, Button, Space, Tag} from "antd";
+import { Card, Typography, Select, List, Button, Space, Tag, Alert } from "antd";
 
 const { Title, Text } = Typography;
 const { Option } = Select;
@@ -20,6 +20,8 @@ const WorldClock = () => {
   const [selectedRegions, setSelectedRegions] = useState([]);
   const [regionValue, setRegionValue] = useState(null);
 
+  const [alertMessage, setAlertMessage] = useState(null);
+
   useEffect(() => {
     const intervalId = setInterval(() => {
       setCurrentTime(new Date());
@@ -29,20 +31,27 @@ const WorldClock = () => {
 
   const handleSelect = (value) => {
     setRegionValue(value);
+    setAlertMessage(null);
   };
 
   const handleSubmit = () => {
     if (!regionValue) {
-      alert("Please select a region first!");
+      setAlertMessage({
+        type: "info",
+        message: "Please select a region first!",
+      });
       return;
     }
     if (selectedRegions.includes(regionValue)) {
-      alert("This country clock already added, please choose a different option.");
+      setAlertMessage({
+        type: "warning",
+        message: "This region is already added. Choose a different one.",
+      });
       return;
     }
     setSelectedRegions((prev) => [...prev, regionValue]);
-    // setAvailableRegions((prev) => prev.filter((region) => region !== regionValue));
     setRegionValue(null);
+    setAlertMessage(null); 
   };
 
   const handleRemove = (region) => {
@@ -54,6 +63,7 @@ const WorldClock = () => {
     setSelectedRegions([]);
     setAvailableRegions(allRegions);
     setRegionValue(null);
+    setAlertMessage(null);
   };
 
   const getTimeInZone = (region) => {
@@ -72,6 +82,17 @@ const WorldClock = () => {
         <Title level={2} style={{ textAlign: "center" }}>
           🌍 World Clock
         </Title>
+
+        {alertMessage && (
+          <Alert
+            message={alertMessage.message}
+            type={alertMessage.type}
+            showIcon
+            closable
+            style={{ marginBottom: 16 }}
+            onClose={() => setAlertMessage(null)}
+          />
+        )}
 
         <Space
           style={{
@@ -106,39 +127,40 @@ const WorldClock = () => {
             Reset
           </Button>
         </Space>
-          <List
-            bordered
-            dataSource={selectedRegions}
-            renderItem={(region) => (
-              <List.Item>
-                <div
-                  style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    alignItems: "center",
-                    width: "100%",
-                  }}
-                >
-                  <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                    <Tag color="blue" style={{ fontWeight: 500 }}>
-                      {region}
-                    </Tag>
-                    <Text style={{ whiteSpace: "nowrap", fontWeight: 500 }}>
-                      {getTimeInZone(region)}
-                    </Text>
-                  </div>
 
-                  <Button
-                    type="link"
-                    style={{ marginLeft: 10 }}
-                    onClick={() => handleRemove(region)}
-                  >
-                    ❌
-                  </Button>
+        <List
+          bordered
+          dataSource={selectedRegions}
+          renderItem={(region) => (
+            <List.Item>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  width: "100%",
+                }}
+              >
+                <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                  <Tag color="blue" style={{ fontWeight: 500 }}>
+                    {region}
+                  </Tag>
+                  <Text style={{ whiteSpace: "nowrap", fontWeight: 500 }}>
+                    {getTimeInZone(region)}
+                  </Text>
                 </div>
-              </List.Item>
-            )}
-          />
+
+                <Button
+                  type="link"
+                  style={{ marginLeft: 10 }}
+                  onClick={() => handleRemove(region)}
+                >
+                  ❌
+                </Button>
+              </div>
+            </List.Item>
+          )}
+        />
       </Card>
     </div>
   );
