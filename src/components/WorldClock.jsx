@@ -5,6 +5,7 @@ const { Title, Text } = Typography;
 const { Option } = Select;
 
 const WorldClock = () => {
+
   const allRegions = [
     "Asia/Tokyo",
     "America/New_York",
@@ -145,7 +146,7 @@ const WorldClock = () => {
                   <Tag color="blue" style={{ fontWeight: 500 }}>
                     {region}
                   </Tag>
-                  <Text style={{ whiteSpace: "nowrap", fontWeight: 500 }}>
+                  <Text style={{fontWeight: 500 }}>
                     {getTimeInZone(region)}
                   </Text>
                 </div>
